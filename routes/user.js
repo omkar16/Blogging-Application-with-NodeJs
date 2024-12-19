@@ -25,9 +25,9 @@ router.post("/signup", async (req, res) => {
 
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.matchPassword(email, password);
-
-  return res.redirect("/");
+  const token = await User.matchPasswordAndGenerateToken(email, password);
+  console.log(token);
+  return res.cookie("token", token).redirect("/");
   //   const user = await User.findOne({ email: Email });
   //   if (!user) return false;
   //   const HashedPassword = crypto
